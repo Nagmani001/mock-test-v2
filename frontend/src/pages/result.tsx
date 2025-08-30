@@ -22,7 +22,7 @@ export default function Result() {
   useEffect(() => {
     const main = async () => {
       try {
-        const token = auth.getToken();
+        const token =await auth.getToken();
         console.log(token);
         const answerDetails = await axios.get(`https://be.mocktest.nagmaniupadhyay.com.np/api/getProblemOne/${id}`,{
           headers: {
