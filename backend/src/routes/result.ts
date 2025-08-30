@@ -1,12 +1,14 @@
 import prisma from "../prisma";
 import { Router, Request, Response } from "express";
+import {getAuth} from "@clerk/express";
 
 export const resultRouter = Router();
 
 resultRouter.get("/getProblemOne/:id", async (req: Request, res: Response) => {
+  const {userId} = getAuth(req);
   const id = req.params.id;
   const testAnswerId = await prisma.testAnswer.findFirst({ where: { testId: id } });
-  if (!testAnswerId) {
+  if (!testAnswerId || ! userId) {
     res.status(401).json({
       msg: "error occured"
     });
@@ -16,6 +18,7 @@ resultRouter.get("/getProblemOne/:id", async (req: Request, res: Response) => {
   const testAnswer = await prisma.testAnswer.findFirst({
     where: {
       id: testAnswerId.id,
+      userId,
     },
     include: {
       solution: true

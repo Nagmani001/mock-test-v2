@@ -62,7 +62,7 @@ app.use("/api/v1/admin/submission", authMiddleware, submissionRouter);
 
 app.use("/api/v1/admin/feedback", authMiddleware, feedbackRouter);
 app.use("/api/webhook/user", webhookRouter);
-app.use("/api", resultRouter);
+app.use("/api",clerkMiddleware(), resultRouter);
 
 
 
