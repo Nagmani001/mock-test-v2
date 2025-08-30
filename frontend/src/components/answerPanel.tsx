@@ -33,7 +33,6 @@ export default function AnserPanel({ questionData }: {
 
               const wordsArr = subAns?.answer?.split(" ") || [""];
               const wordsLength = wordsArr.length;
-              const remainingWords = Math.max(0, questionData.words - wordsLength + 1);
 
               return (
                 <div key={subQ.id} className="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -61,12 +60,6 @@ export default function AnserPanel({ questionData }: {
                       placeholder={`Start typing your answer for question ${index + 1}...`}
                       className="h-32 overflow-y-auto resize-none border-0 focus:ring-0 text-gray-700 leading-relaxed"
                     />
-                    <div className="mt-2 text-sm text-gray-600 flex justify-between">
-                      <span>Question {index + 1}</span>
-                      <span className={remainingWords > 0 ? "text-green-600" : "text-red-500"}>
-                        {remainingWords > 0 ? `${remainingWords} words remaining` : "Word limit reached"}
-                      </span>
-                    </div>
                   </div>
                 </div>
               );
