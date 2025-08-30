@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAuth } from "@clerk/clerk-react";
 import { User, Calendar, Clock, Star } from 'lucide-react';
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,7 +8,16 @@ export default function Result() {
   const { id } = useParams<{ id: string }>();
   const [submission, setSubmission] = useState<any>({});
   const navigate = useNavigate();
+  const auth = useAuth();
 
+  if (!auth.isSignedIn) {
+    toast.error("please sign in first to attempt the test")
+    window.scrollTo({
+      top: 0
+    })
+    navigate("/tests");
+
+  }
   useEffect(() => {
     const main = async () => {
       try {
