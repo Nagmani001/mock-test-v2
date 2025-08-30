@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+model User {
+  id         String       @id @default(uuid())
+  name       String
+  email      String
+  password   String
+  TestAnswer TestAnswer[]
+}
+
+model Admin {
+  id       String @id @default(uuid())
+  name     String
+  email    String
+  password String
+}
+
+model Section {
+  id       String @id @default(uuid())
+  title    String
+  imageUrl String
+  tests    Test[]
+}
+
+model Test {
+  id              String       @id @default(uuid())
+  title           String
+  totalQuestions  Int
+  totalTimeMinute Int
+  totalTimeSecond Int
+  totalTimeHour   Int
+  sectionId       String
+  Section         Section      @relation(fields: [sectionId], references: [id])
+  question        Question[]
+  Test            TestAnswer[]
+  // confused: should be either one to many or 
+  // one to one where the primary id which will come in testAnswer will be combined of userId testId
+  // so that one user can make one submission to one test 
+}
+
+model Question {
+  id           String     @id @default(uuid())
+  question     String
+  type         TestType
+  words        Int
+  successMarks Int
+  failureMarks Int
+  totalMarks   Int
+  testId       String
+  // New fields for comprehension questions
+  title        String?    // Main title for comprehension questions
+  subQuestions SubQuestion[]
+  Test         Test       @relation(fields: [testId], references: [id])
+  solution     Solution[]
+}
+
+model SubQuestion {
+  id         String   @id @default(uuid())
+  question   String
+  questionId String
+  Question   Question @relation(fields: [questionId], references: [id])
+  solutions  SubSolution[]
+}
+
+model TestAnswer {
+  id              String        @id @default(uuid())
+  remainingSecond Int
+  remainingMinute Int
+  remainingHour   Int
+  userId          String
+  testId          String
+  type            AnswerType
+  timeSpent       String
+  submittedAt     DateTime
+  status          TestStatus    @default(pending)
+  percentage      Int?
+  solution        Solution[]
+  subSolution     SubSolution[]
+  User            User          @relation(fields: [userId], references: [id])
+  Test            Test          @relation(fields: [testId], references: [id])
+
+  @@unique([userId, testId])
+}
+
+model Solution {
+  id            String         @id @default(uuid())
+  answer        String
+  wordsNumber   Int
+  status        SolutionStatus
+  adminRating   Int?
+  adminFeedBack String?
+  questionId    String
+  testAnswerId  String
+  TesaAnswer    TestAnswer     @relation(fields: [testAnswerId], references: [id])
+  question      Question       @relation(fields: [questionId], references: [id])
+}
+
+model SubSolution {
+  id            String         @id @default(uuid())
+  answer        String
+  wordsNumber   Int
+  status        SolutionStatus
+  adminRating   Int?
+  adminFeedBack String?
+  subQuestionId String
+  testAnswerId  String
+  TesaAnswer    TestAnswer     @relation(fields: [testAnswerId], references: [id])
+  subQuestion   SubQuestion    @relation(fields: [subQuestionId], references: [id])
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  stars     Int
+  name      String
+  meaning   String
+  timeStamp DateTime @default(now())
+  message   String?
+}
+
+enum AnswerType {
+  Paused
+  Completed
+}
+
+enum TestType {
+  ESSAY
+  LETTER
+  COMPREHENSION
+}
+
+enum TestStatus {
+  graded
+  pending
+}
+
+enum SolutionStatus {
+  Answered
+  Not_Answered
+  Not_Visited
+  Marked_For_Review
+  Answered_And_Marked_For_Review
+}

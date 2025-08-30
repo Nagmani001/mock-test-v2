@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Question" ADD COLUMN     "passingMarks" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "totalMarks" INTEGER NOT NULL DEFAULT 0;

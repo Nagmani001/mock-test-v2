@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Test" ALTER COLUMN "result" DROP NOT NULL,
+ALTER COLUMN "result" DROP DEFAULT;

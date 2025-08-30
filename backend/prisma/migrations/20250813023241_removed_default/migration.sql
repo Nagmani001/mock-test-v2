@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "TestAnswer" ALTER COLUMN "name" DROP DEFAULT,
+ALTER COLUMN "testTitle" DROP DEFAULT,
+ALTER COLUMN "totalQuestions" DROP DEFAULT;

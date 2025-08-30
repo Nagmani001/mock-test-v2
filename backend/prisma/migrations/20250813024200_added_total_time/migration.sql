@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "TestAnswer" ADD COLUMN     "totalTimeHour" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "totalTimeMinute" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "totalTimeSecond" INTEGER NOT NULL DEFAULT 0;

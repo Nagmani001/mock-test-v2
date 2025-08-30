@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Question" ADD COLUMN     "questionTimeHour" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "questionTimeMinute" INTEGER NOT NULL DEFAULT 0,
+ALTER COLUMN "words" DROP DEFAULT;

@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Solution" ALTER COLUMN "adminFeedBack" DROP DEFAULT,
+ALTER COLUMN "adminRating" DROP DEFAULT,
+ALTER COLUMN "isCorrect" DROP DEFAULT;

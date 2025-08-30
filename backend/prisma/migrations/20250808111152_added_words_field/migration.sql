@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Question" ADD COLUMN     "words" INTEGER NOT NULL DEFAULT 100;

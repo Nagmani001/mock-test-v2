@@ -1,0 +1,10 @@
+-- AlterTable
+ALTER TABLE "Question" ALTER COLUMN "questionTimeMinute" DROP DEFAULT,
+ALTER COLUMN "questionTimeSecond" DROP DEFAULT,
+ALTER COLUMN "passingMarks" DROP DEFAULT,
+ALTER COLUMN "totalMarks" DROP DEFAULT;
+
+-- AlterTable
+ALTER TABLE "Test" ALTER COLUMN "totalTimeHour" DROP DEFAULT,
+ALTER COLUMN "totalTimeMinute" DROP DEFAULT,
+ALTER COLUMN "totalTimeSecond" DROP DEFAULT;
