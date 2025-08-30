@@ -22,7 +22,13 @@ export default function Result() {
   useEffect(() => {
     const main = async () => {
       try {
-        const answerDetails = await axios.get(`https://be.mocktest.nagmaniupadhyay.com.np/api/getProblemOne/${id}`);
+        const token = auth.getToken();
+        console.log(token);
+        const answerDetails = await axios.get(`https://be.mocktest.nagmaniupadhyay.com.np/api/getProblemOne/${id}`,{
+          headers: {
+            Authorization: token
+          }
+        });
         console.log(answerDetails.data.msg);
         setSubmission(answerDetails.data.msg);
       } catch (err) {

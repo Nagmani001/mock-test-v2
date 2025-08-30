@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useAuth } from "@clerk/clerk-react";
 import Test from "../components/test";
 import { BASE_URL } from "../config/utils";
 import axios from "axios";
@@ -22,6 +23,7 @@ export default function Tests() {
   const [tests, setTests] = useAtom(testAtom);
   const filter = useAtomValue(filteredTest);
   const search = useAtomValue(searchAtom);
+  const auth = useAuth();
 
   useEffect(() => {
     const main = async () => {
