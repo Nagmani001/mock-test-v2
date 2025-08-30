@@ -27,7 +27,7 @@ export default function AnserPanel({ questionData }: {
           <h2 className="text-xl font-bold text-gray-800">Your Answers</h2>
         </div>
         <div className="flex-1 p-6 overflow-y-auto">
-          <div className="space-y-6">
+          <div className="space-y-6 h-[65vh] overflow-y-auto ">
             {questionData.subQuestions.map((subQ: any, index: number) => {
               const subAns: any = subAnswer.find((ans: any) => ans.id === subQ.id);
 
@@ -77,12 +77,12 @@ export default function AnserPanel({ questionData }: {
   const remainingWords = questionData.words - wordsLength + 1;
 
   return (
-    <div className="h-full flex flex-col bg-gray-50">
+    <div className="flex flex-col bg-gray-50">
       <div className="flex-shrink-0 bg-white border-b border-gray-200 px-6 py-4">
         <h2 className="text-xl font-bold text-gray-800">Your Answer</h2>
       </div>
-      <div className="flex-1 p-6 flex flex-col">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="h-[61vh] w-full overflow-scroll flex-1 p-6 flex flex-col">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 ">
           {answer.map((x: any) => {
             if (x.type == currentSection) {
               return (
