@@ -1,7 +1,6 @@
 import { useAtom, useAtomValue } from "jotai";
 import { Textarea } from "./ui/textarea";
-import { answerAtom, currentSectionAtom, questionAtom, subAnswerAtom } from "@/atom/atom";
-
+import { answerAtom, currentSectionAtom, subAnswerAtom } from "@/atom/atom";
 
 interface QuestionData {
   id: string;
@@ -16,7 +15,7 @@ export default function AnserPanel({ questionData }: {
   const [answer, setAnswer] = useAtom(answerAtom);
   const [subAnswer, setSubAnswer] = useAtom(subAnswerAtom);
   const currentSection = useAtomValue(currentSectionAtom);
-  const questionInfo = useAtomValue(questionAtom);
+  // const questionInfo = useAtomValue(questionAtom);
 
   const isComprehension = questionData.type === 'COMPREHENSION';
 
@@ -30,11 +29,12 @@ export default function AnserPanel({ questionData }: {
         <div className="flex-1 p-6 overflow-y-auto">
           <div className="space-y-6">
             {questionData.subQuestions.map((subQ: any, index: number) => {
-              const subAns = subAnswer.find((ans: any) => ans.id === subQ.id);
+              const subAns: any = subAnswer.find((ans: any) => ans.id === subQ.id);
+
               const wordsArr = subAns?.answer?.split(" ") || [""];
               const wordsLength = wordsArr.length;
               const remainingWords = Math.max(0, questionData.words - wordsLength + 1);
-              
+
               return (
                 <div key={subQ.id} className="bg-white rounded-lg shadow-sm border border-gray-200">
                   <div className="bg-gray-50 px-4 py-2 border-b border-gray-200">
