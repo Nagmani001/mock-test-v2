@@ -2,6 +2,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Textarea } from "./ui/textarea";
 import { answerAtom, currentSectionAtom, questionAtom, subAnswerAtom } from "@/atom/atom";
 
+
 interface QuestionData {
   id: string;
   type: string;
