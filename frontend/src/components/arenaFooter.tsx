@@ -1,8 +1,8 @@
-import { answerAtom, currentSectionAtom, sectionAtom, subAnswerAtom, testTimerAtom } from "@/atom/atom";
+import { answerAtom, currentSectionAtom, currentQuestionIdAtom, questionAtom, subAnswerAtom, testTimerAtom } from "@/atom/atom";
 import { BASE_URL } from "@/config/utils";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -10,8 +10,9 @@ import { toast } from "sonner";
 function ArenaFooter({ id }: { id: string | undefined }) {
   const [answer, setAnswer] = useAtom(answerAtom);
   const subAnswer = useAtomValue(subAnswerAtom);
-  const sectionArray = useAtomValue(sectionAtom);
-  const [currentSection, setCurrentSection] = useAtom(currentSectionAtom);
+  const questionInfo = useAtomValue(questionAtom);
+  const setCurrentSection = useSetAtom(currentSectionAtom);
+  const [currentQuestionId, setCurrentQuestionId] = useAtom(currentQuestionIdAtom);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const time = useAtomValue(testTimerAtom);
@@ -73,11 +74,11 @@ function ArenaFooter({ id }: { id: string | undefined }) {
         <button
           onClick={() => {
             answer.map((x: any) => {
-              if (x.type == currentSection) {
+              if (x.id === currentQuestionId) {
                 if (x.answer == "") {
                   setAnswer((prev: any) => {
                     const newArr = prev.map((x: any) => {
-                      if (x.type == currentSection) {
+                      if (x.id === currentQuestionId) {
                         return { ...x, status: "Marked_For_Review" }
                       } else {
                         return x
@@ -88,7 +89,7 @@ function ArenaFooter({ id }: { id: string | undefined }) {
                 } else {
                   setAnswer((prev: any) => {
                     const newArr = prev.map((x: any) => {
-                      if (x.type == currentSection) {
+                      if (x.id === currentQuestionId) {
                         return { ...x, status: "Answered_And_Marked_For_Review" }
                       } else {
                         return x
@@ -100,14 +101,19 @@ function ArenaFooter({ id }: { id: string | undefined }) {
                 }
               }
             })
-            if (sectionArray[sectionArray.length - 1] == currentSection) {
-              setCurrentSection(sectionArray[0]);
+            
+            // Navigate to next question
+            const currentIndex = questionInfo.question.findIndex(q => q.id === currentQuestionId);
+            if (currentIndex === questionInfo.question.length - 1) {
+              // Go to first question
+              const firstQuestion = questionInfo.question[0];
+              setCurrentSection(firstQuestion.type);
+              setCurrentQuestionId(firstQuestion.id);
             } else {
-              sectionArray.forEach((x: any, i: any) => {
-                if (x == currentSection) {
-                  setCurrentSection(sectionArray[i + 1]);
-                }
-              });
+              // Go to next question
+              const nextQuestion = questionInfo.question[currentIndex + 1];
+              setCurrentSection(nextQuestion.type);
+              setCurrentQuestionId(nextQuestion.id);
             }
           }}
           className="px-6 py-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 transform hover:scale-105"
@@ -118,7 +124,7 @@ function ArenaFooter({ id }: { id: string | undefined }) {
           onClick={() => {
             setAnswer((prev: any) => {
               const newArr = prev.map((x: any) => {
-                if (x.type == currentSection) {
+                if (x.id === currentQuestionId) {
                   return { ...x, answer: "" }
                 } else { return x }
               });
@@ -134,11 +140,11 @@ function ArenaFooter({ id }: { id: string | undefined }) {
         <button
           onClick={() => {
             answer.map((x: any) => {
-              if (x.type == currentSection) {
+              if (x.id === currentQuestionId) {
                 if (x.answer == "") {
                   setAnswer((prev: any) => {
                     const newArr = prev.map((x: any) => {
-                      if (x.type == currentSection) {
+                      if (x.id === currentQuestionId) {
                         return { ...x, status: "Not_Answered" }
                       } else {
                         return x
@@ -151,7 +157,7 @@ function ArenaFooter({ id }: { id: string | undefined }) {
 
                   setAnswer((prev: any) => {
                     const newArr = prev.map((x: any) => {
-                      if (x.type == currentSection) {
+                      if (x.id === currentQuestionId) {
                         return { ...x, status: "Answered" }
                       } else {
                         return x
@@ -162,14 +168,18 @@ function ArenaFooter({ id }: { id: string | undefined }) {
 
                 }
 
-                if (sectionArray[sectionArray.length - 1] == currentSection) {
-                  setCurrentSection(sectionArray[0]);
+                // Navigate to next question
+                const currentIndex = questionInfo.question.findIndex(q => q.id === currentQuestionId);
+                if (currentIndex === questionInfo.question.length - 1) {
+                  // Go to first question
+                  const firstQuestion = questionInfo.question[0];
+                  setCurrentSection(firstQuestion.type);
+                  setCurrentQuestionId(firstQuestion.id);
                 } else {
-                  sectionArray.forEach((x: any, i: any) => {
-                    if (x == currentSection) {
-                      setCurrentSection(sectionArray[i + 1]);
-                    }
-                  });
+                  // Go to next question
+                  const nextQuestion = questionInfo.question[currentIndex + 1];
+                  setCurrentSection(nextQuestion.type);
+                  setCurrentQuestionId(nextQuestion.id);
                 }
               }
             })

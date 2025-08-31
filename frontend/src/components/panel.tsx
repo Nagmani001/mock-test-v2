@@ -2,39 +2,39 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import QuestionPanel from "./questionPanel";
 import AnserPanel from "./answerPanel";
 import { useAtomValue } from "jotai";
-import { currentSectionAtom, questionAtom } from "@/atom/atom";
+import { currentSectionAtom, currentQuestionIdAtom, questionAtom } from "@/atom/atom";
 
 export default function LeftPanel() {
   const questionInfo = useAtomValue(questionAtom);
   const currentSection = useAtomValue(currentSectionAtom);
+  const currentQuestionId = useAtomValue(currentQuestionIdAtom);
+
+  // Find the specific question that matches both current section and current question ID
+  const currentQuestion = questionInfo.question.find(x => x.id === currentQuestionId && x.type === currentSection);
 
   return (
     <div className="h-full">
       <PanelGroup direction="horizontal" className="h-full">
         <Panel defaultSize={50} className="min-w-0">
-          {questionInfo.question.map(x => {
-            if (x.type == currentSection) {
-              return <QuestionPanel key={x.id} questionData={{
-                question: x.question,
-                type: x.type,
-                title: x.title,
-                subQuestions: x.subQuestions
-              }} />
-            }
-          })}
+          {currentQuestion && (
+            <QuestionPanel questionData={{
+              question: currentQuestion.question,
+              type: currentQuestion.type,
+              title: currentQuestion.title,
+              subQuestions: currentQuestion.subQuestions
+            }} />
+          )}
         </Panel>
         <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-300 transition-colors duration-200" />
         <Panel defaultSize={50} className="min-w-0">
-          {questionInfo.question.map(x => {
-            if (x.type == currentSection) {
-              return <AnserPanel key={x.id} questionData={{
-                id: x.id,
-                type: x.type,
-                words: x.words,
-                subQuestions: x.subQuestions
-              }} />
-            }
-          })}
+          {currentQuestion && (
+            <AnserPanel questionData={{
+              id: currentQuestion.id,
+              type: currentQuestion.type,
+              words: currentQuestion.words,
+              subQuestions: currentQuestion.subQuestions
+            }} />
+          )}
         </Panel>
       </PanelGroup>
     </div>

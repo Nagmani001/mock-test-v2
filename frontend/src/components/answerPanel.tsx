@@ -1,6 +1,6 @@
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { Textarea } from "./ui/textarea";
-import { answerAtom, currentSectionAtom, subAnswerAtom } from "@/atom/atom";
+import { answerAtom, subAnswerAtom } from "@/atom/atom";
 
 interface QuestionData {
   id: string;
@@ -14,7 +14,6 @@ export default function AnserPanel({ questionData }: {
 }) {
   const [answer, setAnswer] = useAtom(answerAtom);
   const [subAnswer, setSubAnswer] = useAtom(subAnswerAtom);
-  const currentSection = useAtomValue(currentSectionAtom);
   // const questionInfo = useAtomValue(questionAtom);
 
   const isComprehension = questionData.type === 'COMPREHENSION';
@@ -72,7 +71,7 @@ export default function AnserPanel({ questionData }: {
 
   // Regular single answer for Essay and Letter questions
   //@ts-ignore
-  let wordsArr = answer.find((x: any) => x.type == currentSection)?.answer.split(" ");
+  let wordsArr = answer.find((x: any) => x.id === questionData.id)?.answer.split(" ");
   let wordsLength = wordsArr.length;
   const remainingWords = questionData.words - wordsLength + 1;
 
@@ -84,7 +83,7 @@ export default function AnserPanel({ questionData }: {
       <div className="h-[61vh] w-full overflow-scroll flex-1 p-6 flex flex-col">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 ">
           {answer.map((x: any) => {
-            if (x.type == currentSection) {
+            if (x.id === questionData.id) {
               return (
                 <Textarea
                   key={x.id}

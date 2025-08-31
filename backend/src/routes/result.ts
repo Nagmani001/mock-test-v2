@@ -6,8 +6,16 @@ export const resultRouter = Router();
 
 resultRouter.get("/getProblemOne/:id", async (req: Request, res: Response) => {
   const {userId} = getAuth(req);
+  if(!userId){
+    return;
+  }
   const id = req.params.id;
-  const testAnswerId = await prisma.testAnswer.findFirst({ where: { testId: id } });
+  const testAnswerId = await prisma.testAnswer.findFirst({
+    where: {
+      testId: id,
+      userId
+    } 
+  });
   if (!testAnswerId || ! userId) {
     res.status(401).json({
       msg: "error occured"

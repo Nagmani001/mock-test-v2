@@ -24,6 +24,7 @@ export const subAnswerAtom = atom([]);
 export const sectionAtom = atom([]);
 
 export const currentSectionAtom = atom<null | string>(null);
+export const currentQuestionIdAtom = atom<null | string>(null);
 
 
 export const questionAtom = atom({
