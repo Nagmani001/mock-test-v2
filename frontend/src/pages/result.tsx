@@ -22,9 +22,9 @@ export default function Result() {
   useEffect(() => {
     const main = async () => {
       try {
-        const token =await auth.getToken();
+        const token = await auth.getToken();
         console.log(token);
-        const answerDetails = await axios.get(`https://be.mocktest.nagmaniupadhyay.com.np/api/getProblemOne/${id}`,{
+        const answerDetails = await axios.get(`https://be.mocktest.nagmaniupadhyay.com.np/api/getProblemOne/${id}`, {
           headers: {
             Authorization: token
           }
@@ -155,7 +155,7 @@ export default function Result() {
                           </div>
                         </>
                       ) : (
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">{question.question}</h3>
+                        <h3 className="text-lg font-medium text-gray-900 mb-2">{question.question}</h3>
                       )}
                       <p className="text-sm text-gray-600">
                         Success marks: {question.successMarks} | Failure marks: {question.failureMarks}
@@ -183,15 +183,6 @@ export default function Result() {
                             <div className="mb-4">
                               <h5 className="font-medium text-gray-900 mb-2 flex items-center space-x-2">
                                 <span>Your Response:</span>
-                                {subQ.userAnswer ? (
-                                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                                    {subQ.userAnswer.length} characters
-                                  </span>
-                                ) : (
-                                  <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
-                                    No answer provided
-                                  </span>
-                                )}
                               </h5>
                               <div className="bg-white rounded-lg p-4 border-l-4 border-green-500 shadow-sm">
                                 {subQ.userAnswer ? (
@@ -206,7 +197,7 @@ export default function Result() {
                             {(subQ.adminRating !== null && subQ.adminRating !== undefined) || subQ.adminFeedback ? (
                               <div className="border-t border-gray-200 pt-3">
                                 <h5 className="font-medium text-gray-900 mb-2">Admin Rating & Feedback</h5>
-                                
+
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                   {/* Rating */}
                                   {(subQ.adminRating !== null && subQ.adminRating !== undefined) && (
@@ -283,38 +274,38 @@ export default function Result() {
                           ) : (
                             <p className="text-gray-400 italic">No answer provided.</p>
                           )}
-                    </div>
-                  </div>
+                        </div>
+                      </div>
 
                       {/* Admin Rating Section (Read-only) */}
                       {(question.adminRating !== null && question.adminRating !== undefined) || question.adminFeedback ? (
-                  <div className="border-t border-gray-200 pt-4">
-                    <h4 className="font-medium text-gray-900 mb-3">Admin Rating & Feedback</h4>
+                        <div className="border-t border-gray-200 pt-4">
+                          <h4 className="font-medium text-gray-900 mb-3">Admin Rating & Feedback</h4>
 
-                    {/* Rating */}
+                          {/* Rating */}
                           {(question.adminRating !== null && question.adminRating !== undefined) && (
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Rating (out of {question.successMarks} marks)
-                      </label>
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="number"
-                          disabled
-                          value={question.adminRating}
+                            <div className="mb-4">
+                              <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Rating (out of {question.successMarks} marks)
+                              </label>
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="number"
+                                  disabled
+                                  value={question.adminRating}
                                   className="w-20 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50"
-                        />
-                        <span className="text-gray-600">/ {question.successMarks}</span>
-                      </div>
-                    </div>
+                                />
+                                <span className="text-gray-600">/ {question.successMarks}</span>
+                              </div>
+                            </div>
                           )}
 
-                    {/* Feedback */}
+                          {/* Feedback */}
                           {question.adminFeedback && (
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <div className="mb-4">
+                              <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Admin Feedback
-                      </label>
+                              </label>
                               <div className="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-500">
                                 <p className="text-blue-800 leading-relaxed whitespace-pre-wrap">{question.adminFeedback}</p>
                               </div>
@@ -325,8 +316,8 @@ export default function Result() {
                         <div className="border-t border-gray-200 pt-4">
                           <div className="bg-yellow-50 rounded-lg p-4 border-l-4 border-yellow-500">
                             <p className="text-yellow-800 text-sm">This question hasn't been graded yet.</p>
-                    </div>
-                  </div>
+                          </div>
+                        </div>
                       )}
                     </>
                   )}

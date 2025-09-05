@@ -1,12 +1,12 @@
 import prisma from "../prisma";
 import { Router, Request, Response } from "express";
-import {getAuth} from "@clerk/express";
+import { getAuth } from "@clerk/express";
 
 export const resultRouter = Router();
 
 resultRouter.get("/getProblemOne/:id", async (req: Request, res: Response) => {
-  const {userId} = getAuth(req);
-  if(!userId){
+  const { userId } = getAuth(req);
+  if (!userId) {
     return;
   }
   const id = req.params.id;
@@ -14,9 +14,9 @@ resultRouter.get("/getProblemOne/:id", async (req: Request, res: Response) => {
     where: {
       testId: id,
       userId
-    } 
+    }
   });
-  if (!testAnswerId || ! userId) {
+  if (!testAnswerId || !userId) {
     res.status(401).json({
       msg: "error occured"
     });
@@ -70,7 +70,7 @@ resultRouter.get("/getProblemOne/:id", async (req: Request, res: Response) => {
           questionDetails.subQuestions.map(async (subQ) => {
             // Find the corresponding sub-solution for this sub-question
             const subSolution = testAnswer.subSolution.find(subSol => subSol.subQuestionId === subQ.id);
-            
+
             return {
               id: subSolution?.id || subQ.id,
               question: subQ.question,
@@ -98,7 +98,7 @@ resultRouter.get("/getProblemOne/:id", async (req: Request, res: Response) => {
     } else {
       // For regular questions (Essay/Letter), find the main solution
       const mainSolution = testAnswer.solution.find(sol => sol.questionId === questionDetails.id);
-      
+
       return {
         id: mainSolution?.id || questionDetails.id,
         question: questionDetails.question,

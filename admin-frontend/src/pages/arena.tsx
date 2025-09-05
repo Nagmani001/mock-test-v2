@@ -218,15 +218,6 @@ export default function Arena() {
                         <div className="mb-4">
                           <h5 className="font-medium text-gray-900 mb-2 flex items-center space-x-2">
                             <span>Student Response:</span>
-                            {subQ.userAnswer ? (
-                              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                                {subQ.userAnswer.length} characters
-                              </span>
-                            ) : (
-                              <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
-                                No answer provided
-                              </span>
-                            )}
                           </h5>
                           <div className="bg-white rounded-lg p-4 border-l-4 border-green-500 shadow-sm">
                             {subQ.userAnswer ? (
