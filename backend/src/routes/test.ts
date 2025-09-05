@@ -99,6 +99,18 @@ testRouter.post("/submit", requireAuth(), async (req: Request, res: Response) =>
   const timeSpent = `${totalTimeSpentHour}h ${totalTimeSpentMinute}m ${totalTimeSpentSecond}s`;
 
   try {
+    // First, get question types to determine which solutions to create
+    const questions = await prisma.question.findMany({
+      where: { testId: parsedData.data.testId },
+      select: { id: true, type: true }
+    });
+
+    // Filter solutions based on question type
+    const regularSolutions = parsedData.data.solution.filter((sol: any) => {
+      const question = questions.find(q => q.id === sol.questionId);
+      return question?.type !== 'COMPREHENSION';
+    });
+
     await prisma.testAnswer.create({
       data: {
         timeSpent,
@@ -109,9 +121,11 @@ testRouter.post("/submit", requireAuth(), async (req: Request, res: Response) =>
         submittedAt: parsedData.data.submittedAt,
         userId,
         testId: parsedData.data.testId,
-        solution: {
-          create: parsedData.data.solution
-        },
+        // Only create solutions for non-comprehension questions
+        solution: regularSolutions.length > 0 ? {
+          create: regularSolutions
+        } : undefined,
+        // Create sub-solutions for comprehension questions
         subSolution: parsedData.data.subSolution ? {
           create: parsedData.data.subSolution
         } : undefined
@@ -162,6 +176,18 @@ testRouter.post("/pause", requireAuth(), async (req: Request, res: Response) => 
   const timeSpent = `${totalTimeSpentHour}h ${totalTimeSpentMinute}m ${totalTimeSpentSecond}s`;
 
   try {
+    // First, get question types to determine which solutions to create
+    const questions = await prisma.question.findMany({
+      where: { testId: parsedData.data.testId },
+      select: { id: true, type: true }
+    });
+
+    // Filter solutions based on question type
+    const regularSolutions = parsedData.data.solution.filter((sol: any) => {
+      const question = questions.find(q => q.id === sol.questionId);
+      return question?.type !== 'COMPREHENSION';
+    });
+
     await prisma.testAnswer.create({
       data: {
         timeSpent,
@@ -172,9 +198,11 @@ testRouter.post("/pause", requireAuth(), async (req: Request, res: Response) => 
         submittedAt: parsedData.data.submittedAt,
         userId,
         testId: parsedData.data.testId,
-        solution: {
-          create: parsedData.data.solution
-        },
+        // Only create solutions for non-comprehension questions
+        solution: regularSolutions.length > 0 ? {
+          create: regularSolutions
+        } : undefined,
+        // Create sub-solutions for comprehension questions
         subSolution: parsedData.data.subSolution ? {
           create: parsedData.data.subSolution
         } : undefined

@@ -210,28 +210,44 @@ export default function Arena() {
                 </div>
               </div>
 
-              {question.type === 'COMPREHENSION' && question.subQuestions ? (
+              {question.type === 'COMPREHENSION' ? (
                 /* Comprehension Question with Sub-questions */
                 <div className="space-y-6">
-                  {question.subQuestions.map((subQ, subIndex) => (
-                    <div key={subQ.id} className="border border-gray-200 rounded-lg p-4">
-                      {/* Sub-question */}
-                      <div className="mb-4">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <span className="bg-green-100 text-green-800 text-sm font-medium px-2 py-1 rounded">
-                            Sub-question {subIndex + 1}
-                          </span>
+                  {question.subQuestions && question.subQuestions.length > 0 ? (
+                    question.subQuestions.map((subQ, subIndex) => (
+                      <div key={subQ.id} className="border border-gray-200 rounded-lg p-4 bg-gradient-to-r from-green-50 to-emerald-50">
+                        {/* Sub-question */}
+                        <div className="mb-4">
+                          <div className="flex items-center space-x-2 mb-3">
+                            <span className="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
+                              Sub-question {subIndex + 1}
+                            </span>
+                          </div>
+                          <p className="text-gray-900 font-medium text-lg leading-relaxed">{subQ.question}</p>
                         </div>
-                        <p className="text-gray-900 font-medium">{subQ.question}</p>
-                      </div>
 
-                      {/* User Answer for Sub-question */}
-                      <div className="mb-4">
-                        <h5 className="font-medium text-gray-900 mb-2">Student Response:</h5>
-                        <div className="bg-gray-50 rounded-lg p-3 border-l-4 border-green-500">
-                          <p className="text-gray-800 leading-relaxed">{subQ.userAnswer}</p>
+                        {/* User Answer for Sub-question */}
+                        <div className="mb-4">
+                          <h5 className="font-medium text-gray-900 mb-2 flex items-center space-x-2">
+                            <span>Student Response:</span>
+                            {subQ.userAnswer ? (
+                              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                {subQ.userAnswer.length} characters
+                              </span>
+                            ) : (
+                              <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
+                                No answer provided
+                              </span>
+                            )}
+                          </h5>
+                          <div className="bg-white rounded-lg p-4 border-l-4 border-green-500 shadow-sm">
+                            {subQ.userAnswer ? (
+                              <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">{subQ.userAnswer}</p>
+                            ) : (
+                              <p className="text-gray-400 italic">No answer provided by the student for this sub-question.</p>
+                            )}
+                          </div>
                         </div>
-                      </div>
 
                       {/* Admin Rating for Sub-question */}
                       <div className="border-t border-gray-200 pt-3">
@@ -301,16 +317,46 @@ export default function Arena() {
                         )}
                       </div>
                     </div>
-                  ))}
+                  ))
+                  ) : (
+                    /* No sub-questions found */
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <span className="text-yellow-600">⚠️</span>
+                        <p className="text-yellow-800 font-medium">
+                          This comprehension question has no sub-questions to display.
+                        </p>
+                      </div>
+                      <p className="text-yellow-700 text-sm">
+                        Comprehension questions should have individual sub-questions for students to answer. 
+                        Please check if this question was created properly.
+                      </p>
+                    </div>
+                  )}
                 </div>
               ) : (
                 /* Regular Question (Essay/Letter) */
                 <>
                   {/* User Answer */}
                   <div className="mb-6">
-                    <h4 className="font-medium text-gray-900 mb-2">Student Response:</h4>
-                    <div className="bg-gray-50 rounded-lg p-4 border-l-4 border-blue-500">
-                      <p className="text-gray-800 leading-relaxed">{question.userAnswer}</p>
+                    <h4 className="font-medium text-gray-900 mb-2 flex items-center space-x-2">
+                      <span>Student Response:</span>
+                      {question.userAnswer ? (
+                        <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                          {question.userAnswer.length} characters
+                        </span>
+                      ) : (
+                        <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
+                          No answer provided
+                        </span>
+                      )}
+                    </h4>
+                    <div className="bg-white rounded-lg p-4 border-l-4 border-blue-500 shadow-sm">
+                      {question.userAnswer ? (
+                        <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">{question.userAnswer}</p>
+                      ) : (
+                        <p className="text-gray-400 italic">No answer provided by the student.</p>
+                      )}
                     </div>
                   </div>
 
