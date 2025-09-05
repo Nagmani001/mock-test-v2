@@ -7,14 +7,14 @@ function MarkedForReview({ number }: {
     <div className="w-[24px] h-[28px] flex flex-col justify-center items-center">
       <svg viewBox="0 0 38 47" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
         <defs>
-          <linearGradient id="grad-purple" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient id={`grad-purple-${number}`} x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" style={{ stopColor: '#c084fc', stopOpacity: 1 }} />
             <stop offset="100%" style={{ stopColor: '#7c3aed', stopOpacity: 1 }} />
           </linearGradient>
         </defs>
         <path
           d="M0 0 L38 0 L38 34 L19 47 L0 34 Z"
-          fill="url(#grad-purple)"
+          fill={`url(#grad-purple-${number})`}
           stroke="#7c3aed"
           strokeWidth="1"
         />

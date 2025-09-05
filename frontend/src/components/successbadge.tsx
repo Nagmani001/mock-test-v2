@@ -9,7 +9,7 @@ const Badge = ({ number }: { number: number }) => {
         className="w-full h-full"
       >
         <defs>
-          <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient id={`grad-success-${number}`} x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" style={{ stopColor: '#ccf47d', stopOpacity: 1 }} />
             <stop offset="100%" style={{ stopColor: '#4CAF50', stopOpacity: 1 }} />
           </linearGradient>
@@ -17,7 +17,7 @@ const Badge = ({ number }: { number: number }) => {
         {/* Reversed shape with straight sides and flat top */}
         <path
           d="M0 0 L38 0 L38 34 L19 47 L0 34 Z"
-          fill="url(#grad)"
+          fill={`url(#grad-success-${number})`}
           stroke="#7EC850"
           strokeWidth="1"
         />
