@@ -159,27 +159,27 @@ export default function TimerSection() {
           <div className="flex justify-center bg-gradient-to-r from-blue-500 to-blue-600 text-white p-3 font-semibold">
             Section Writing
           </div>
-          <div className="flex-1 grid grid-cols-3 gap-3 p-4 overflow-y-auto">
+          <div className="flex-1 grid grid-cols-3 gap-4 p-6 overflow-y-auto">
             {answer.map((x: any, i: any) => {
               switch (x.status) {
                 case "Answered":
-                  return <div key={i} className="flex justify-center items-center">
+                  return <div key={i} className="flex justify-center items-center p-2">
                     <SectionWritingBadge number={i + 1} />
                   </div>
                 case "Not_Answered":
-                  return <div key={i} className="flex justify-center items-center">
+                  return <div key={i} className="flex justify-center items-center p-2">
                     <SectionWritingFailBadge number={i + 1} />
                   </div>
                 case "Not_Visited":
-                  return <div key={i} className="flex justify-center items-center">
+                  return <div key={i} className="flex justify-center items-center p-2">
                     <SectionWritingNotVisitedBadge number={i + 1} />
                   </div>
                 case "Marked_For_Review":
-                  return <div key={i} className="flex justify-center items-center">
+                  return <div key={i} className="flex justify-center items-center p-2">
                     <SectionWritingMarkedBadge number={i + 1} />
                   </div>
                 case "Answered_And_Marked_For_Review":
-                  return <div key={i} className="flex justify-center items-center">
+                  return <div key={i} className="flex justify-center items-center p-2">
                     <SectionWritingAnsweredMarkedBadge number={i + 1} />
                   </div>
                 default:
