@@ -60,7 +60,7 @@ export const createTestSchema = z.object({
   sectionId: z.string(),
   questions: z.array(z.object({
     question: z.string(),
-    type: z.enum(["ESSAY", "LETTER", "COMPREHENSION"]),
+    type: z.enum(["ESSAY", "LETTER", "COMPREHENSION", "PRECIS"]),
     words: z.number(),
     successMarks: z.number(),
     failureMarks: z.number(),
