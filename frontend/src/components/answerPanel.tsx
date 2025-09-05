@@ -22,11 +22,11 @@ export default function AnserPanel({ questionData }: {
     // Render multiple answer inputs for comprehension sub-questions
     return (
       <div className="h-full flex flex-col bg-gray-50">
-        <div className="flex-shrink-0 bg-white border-b border-gray-200 px-6 py-4">
-          <h2 className="text-xl font-bold text-gray-800">Your Answers</h2>
+        <div className="flex-shrink-0 bg-white border-b border-gray-200 px-3 md:px-6 py-3 md:py-4">
+          <h2 className="text-lg md:text-xl font-bold text-gray-800">Your Answers</h2>
         </div>
-        <div className="flex-1 p-6 overflow-y-auto">
-          <div className="space-y-6 h-[65vh] overflow-y-auto ">
+        <div className="flex-1 p-3 md:p-6 overflow-y-auto min-h-0">
+          <div className="space-y-4 md:space-y-6 h-full overflow-y-auto">
             {questionData.subQuestions.map((subQ: any, index: number) => {
               const subAns: any = subAnswer.find((ans: any) => ans.id === subQ.id);
 
@@ -35,10 +35,10 @@ export default function AnserPanel({ questionData }: {
 
               return (
                 <div key={subQ.id} className="bg-white rounded-lg shadow-sm border border-gray-200">
-                  <div className="bg-gray-50 px-4 py-2 border-b border-gray-200">
-                    <h3 className="text-sm font-semibold text-gray-700">Answer {index + 1}</h3>
+                  <div className="bg-gray-50 px-3 md:px-4 py-2 border-b border-gray-200">
+                    <h3 className="text-xs md:text-sm font-semibold text-gray-700">Answer {index + 1}</h3>
                   </div>
-                  <div className="p-4">
+                  <div className="p-3 md:p-4">
                     <Textarea
                       onChange={(e: any) => {
                         setSubAnswer((prev: any) => {
@@ -57,7 +57,7 @@ export default function AnserPanel({ questionData }: {
                       }}
                       value={subAns?.answer || ''}
                       placeholder={`Start typing your answer for question ${index + 1}...`}
-                      className="h-32 overflow-y-auto resize-none border-0 focus:ring-0 text-gray-700 leading-relaxed"
+                      className="h-24 md:h-32 overflow-y-auto resize-none border-0 focus:ring-0 text-gray-700 leading-relaxed text-sm md:text-base"
                     />
                   </div>
                 </div>
@@ -76,12 +76,12 @@ export default function AnserPanel({ questionData }: {
   const remainingWords = questionData.words - wordsLength + 1;
 
   return (
-    <div className="flex flex-col bg-gray-50">
-      <div className="flex-shrink-0 bg-white border-b border-gray-200 px-6 py-4">
-        <h2 className="text-xl font-bold text-gray-800">Your Answer</h2>
+    <div className="h-full flex flex-col bg-gray-50">
+      <div className="flex-shrink-0 bg-white border-b border-gray-200 px-3 md:px-6 py-3 md:py-4">
+        <h2 className="text-lg md:text-xl font-bold text-gray-800">Your Answer</h2>
       </div>
-      <div className="h-[61vh] w-full overflow-scroll flex-1 p-6 flex flex-col">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 ">
+      <div className="flex-1 p-3 md:p-6 flex flex-col min-h-0">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 flex-1 min-h-0">
           {answer.map((x: any) => {
             if (x.id === questionData.id) {
               return (
@@ -103,21 +103,21 @@ export default function AnserPanel({ questionData }: {
                   }}
                   value={x.answer}
                   placeholder="Start typing your answer here..."
-                  className="h-[55vh] overflow-y-auto resize-none border-0 focus:ring-0 text-gray-700 text-lg leading-relaxed p-6"
+                  className="h-full overflow-y-auto resize-none border-0 focus:ring-0 text-gray-700 text-sm md:text-lg leading-relaxed p-3 md:p-6"
                 />
               );
             }
             return null;
           })}
         </div>
-        <div className="mt-2 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-          <div className="flex justify-between items-center">
-            <span className="font-medium text-gray-700">Word Count</span>
+        <div className="mt-2 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-3 md:p-4 border border-gray-200 flex-shrink-0">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+            <span className="font-medium text-gray-700 text-sm md:text-base">Word Count</span>
             <div className="flex items-center space-x-2">
               {remainingWords > 0 ? (
-                <span className="font-bold text-green-600">{remainingWords} words remaining</span>
+                <span className="font-bold text-green-600 text-sm md:text-base">{remainingWords} words remaining</span>
               ) : (
-                <span className="font-bold text-red-500">Word limit reached</span>
+                <span className="font-bold text-red-500 text-sm md:text-base">Word limit reached</span>
               )}
             </div>
           </div>

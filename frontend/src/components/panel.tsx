@@ -14,8 +14,9 @@ export default function LeftPanel() {
 
   return (
     <div className="h-full">
-      <PanelGroup direction="horizontal" className="h-full">
-        <Panel defaultSize={50} className="min-w-0">
+      {/* Mobile Layout - Vertical Stack */}
+      <div className="lg:hidden h-full flex flex-col">
+        <div className="flex-1 min-h-0 border-b border-gray-200">
           {currentQuestion && (
             <QuestionPanel questionData={{
               question: currentQuestion.question,
@@ -24,9 +25,8 @@ export default function LeftPanel() {
               subQuestions: currentQuestion.subQuestions
             }} />
           )}
-        </Panel>
-        <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-300 transition-colors duration-200" />
-        <Panel defaultSize={50} className="min-w-0">
+        </div>
+        <div className="flex-1 min-h-0">
           {currentQuestion && (
             <AnserPanel questionData={{
               id: currentQuestion.id,
@@ -35,8 +35,35 @@ export default function LeftPanel() {
               subQuestions: currentQuestion.subQuestions
             }} />
           )}
-        </Panel>
-      </PanelGroup>
+        </div>
+      </div>
+
+      {/* Desktop Layout - Horizontal Resizable Panels */}
+      <div className="hidden lg:block h-full">
+        <PanelGroup direction="horizontal" className="h-full">
+          <Panel defaultSize={50} className="min-w-0">
+            {currentQuestion && (
+              <QuestionPanel questionData={{
+                question: currentQuestion.question,
+                type: currentQuestion.type,
+                title: currentQuestion.title,
+                subQuestions: currentQuestion.subQuestions
+              }} />
+            )}
+          </Panel>
+          <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-300 transition-colors duration-200" />
+          <Panel defaultSize={50} className="min-w-0">
+            {currentQuestion && (
+              <AnserPanel questionData={{
+                id: currentQuestion.id,
+                type: currentQuestion.type,
+                words: currentQuestion.words,
+                subQuestions: currentQuestion.subQuestions
+              }} />
+            )}
+          </Panel>
+        </PanelGroup>
+      </div>
     </div>
   );
 }

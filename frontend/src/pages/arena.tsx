@@ -106,14 +106,14 @@ export default function Arena() {
   return (
     <div className="h-screen flex flex-col bg-gray-50 overflow-hidden">
       {/* Header */}
-      <div className="flex-shrink-0 h-20 bg-white shadow-sm border-b border-gray-200">
+      <div className="flex-shrink-0 h-16 md:h-20 bg-white shadow-sm border-b border-gray-200">
         <ArenaNav title={questionInfo.title}  />
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex min-h-0">
-        {/* Left Panel */}
-        <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col lg:flex-row min-h-0">
+        {/* Left Panel - Main Content */}
+        <div className="flex-1 flex flex-col min-w-0 order-1">
           <SecondaryNav />
           <div className="flex-1 bg-white shadow-sm">
             <LeftPanel />
@@ -121,13 +121,13 @@ export default function Arena() {
         </div>
 
         {/* Right Panel - Timer Section */}
-        <div className="w-80 flex-shrink-0 bg-white shadow-lg border-l border-gray-200">
+        <div className="w-full lg:w-80 flex-shrink-0 bg-white shadow-lg border-t lg:border-t-0 lg:border-l border-gray-200 order-2 lg:order-1">
           <TimerSection />
         </div>
       </div>
 
       {/* Footer */}
-      <div className="flex-shrink-0 h-16 bg-white shadow-sm border-t border-gray-200">
+      <div className="flex-shrink-0 h-14 md:h-16 bg-white shadow-sm border-t border-gray-200">
         <ArenaFooter id={questionId.id} />
       </div>
     </div>
