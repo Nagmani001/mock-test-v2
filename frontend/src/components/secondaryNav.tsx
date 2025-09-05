@@ -56,6 +56,8 @@ function findSection(section: string) {
     return "Essay Writing"
   } else if (section == "COMPREHENSION") {
     return "Comprehension Writing"
+  } else if (section == "PRECIS") {
+    return "Precis Writing"
   }
 }
 
@@ -66,5 +68,7 @@ function findSectionShort(section: string) {
     return "Essay"
   } else if (section == "COMPREHENSION") {
     return "Comp"
+  } else if (section == "PRECIS") {
+    return "Precis"
   }
 }

@@ -51,6 +51,7 @@ const CreateProblemPage: React.FC = () => {
     'ESSAY',
     'LETTER',
     'COMPREHENSION',
+    'PRECIS',
   ];
 
   const sections = [

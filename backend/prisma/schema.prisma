@@ -140,6 +140,7 @@ enum TestType {
   ESSAY
   LETTER
   COMPREHENSION
+  PRECIS
 }
 
 enum TestStatus {
