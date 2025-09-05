@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { User, Calendar, Clock, Star, MessageSquare, Save } from 'lucide-react';
+import { User, Calendar, Clock, Star, MessageSquare } from 'lucide-react';
 import axios from 'axios';
 import { BASE_URL } from '@/config/utils';
 import { toast } from 'sonner';
@@ -81,12 +81,6 @@ export default function Arena() {
   };
 
 
-  const handleSaveSubRating = (subQuestionId: string) => {
-    console.log(`Saving rating for sub-question ${subQuestionId}:`, {
-      rating: subRatings[subQuestionId],
-      feedback: subFeedback[subQuestionId]
-    });
-  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString('en-In', {
@@ -266,16 +260,6 @@ export default function Arena() {
                               </div>
                             </div>
 
-                            {/* Save Button */}
-                            <div className="flex items-end">
-                              <button
-                                onClick={() => handleSaveSubRating(subQ.id)}
-                                className="flex items-center space-x-2 bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm"
-                              >
-                                <Save className="w-3 h-3" />
-                                <span>Save</span>
-                              </button>
-                            </div>
                           </div>
 
                           {/* Feedback */}
