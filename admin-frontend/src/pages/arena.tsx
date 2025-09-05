@@ -80,12 +80,6 @@ export default function Arena() {
     setSubFeedback(prev => ({ ...prev, [subQuestionId]: feedbackText }));
   };
 
-  const handleSaveRating = (questionId: string) => {
-    console.log(`Saving rating for question ${questionId}:`, {
-      rating: ratings[questionId],
-      feedback: feedback[questionId]
-    });
-  };
 
   const handleSaveSubRating = (subQuestionId: string) => {
     console.log(`Saving rating for sub-question ${subQuestionId}:`, {
@@ -249,75 +243,75 @@ export default function Arena() {
                           </div>
                         </div>
 
-                      {/* Admin Rating for Sub-question */}
-                      <div className="border-t border-gray-200 pt-3">
-                        <h5 className="font-medium text-gray-900 mb-2">Rating & Feedback</h5>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {/* Rating */}
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                              Rating (out of {Math.floor(question.successMarks / (question.subQuestions?.length || 1))} marks)
-                            </label>
-                            <div className="flex items-center space-x-2">
-                              <input
-                                type="number"
-                                min="0"
-                                max={Math.floor(question.successMarks / (question.subQuestions?.length || 1))}
-                                value={subRatings[subQ.id] ?? subQ.adminRating ?? ''}
-                                onChange={(e) => handleSubRatingChange(subQ.id, parseInt(e.target.value))}
-                                className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                              />
-                              <span className="text-gray-600">/ {Math.floor(question.successMarks / (question.subQuestions?.length || 1))}</span>
-                            </div>
-                          </div>
+                        {/* Admin Rating for Sub-question */}
+                        <div className="border-t border-gray-200 pt-3">
+                          <h5 className="font-medium text-gray-900 mb-2">Rating & Feedback</h5>
 
-                          {/* Save Button */}
-                          <div className="flex items-end">
-                            <button
-                              onClick={() => handleSaveSubRating(subQ.id)}
-                              className="flex items-center space-x-2 bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm"
-                            >
-                              <Save className="w-3 h-3" />
-                              <span>Save</span>
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Feedback */}
-                        <div className="mt-3">
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Feedback
-                          </label>
-                          <textarea
-                            value={subFeedback[subQ.id] ?? subQ.adminFeedback ?? ''}
-                            onChange={(e) => handleSubFeedbackChange(subQ.id, e.target.value)}
-                            placeholder="Provide feedback for this sub-question..."
-                            rows={2}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          />
-                        </div>
-
-                        {/* Current Feedback Display */}
-                        {subQ.adminFeedback && (
-                          <div className="mt-3 p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
-                            <div className="flex items-start space-x-2">
-                              <MessageSquare className="w-3 h-3 text-green-600 mt-0.5" />
-                              <div>
-                                <p className="text-xs font-medium text-green-900">Current Feedback:</p>
-                                <p className="text-xs text-green-800">{subQ.adminFeedback}</p>
-                                {subQ.adminRating && (
-                                  <p className="text-xs text-green-700 mt-1">
-                                    Current Rating: {subQ.adminRating}/{Math.floor(question.successMarks / (question.subQuestions?.length || 1))} marks
-                                  </p>
-                                )}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* Rating */}
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Rating (out of {Math.floor(question.successMarks / (question.subQuestions?.length || 1))} marks)
+                              </label>
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="number"
+                                  min="0"
+                                  max={Math.floor(question.successMarks / (question.subQuestions?.length || 1))}
+                                  value={subRatings[subQ.id] ?? subQ.adminRating ?? ''}
+                                  onChange={(e) => handleSubRatingChange(subQ.id, parseInt(e.target.value))}
+                                  className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                />
+                                <span className="text-gray-600">/ {Math.floor(question.successMarks / (question.subQuestions?.length || 1))}</span>
                               </div>
                             </div>
+
+                            {/* Save Button */}
+                            <div className="flex items-end">
+                              <button
+                                onClick={() => handleSaveSubRating(subQ.id)}
+                                className="flex items-center space-x-2 bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm"
+                              >
+                                <Save className="w-3 h-3" />
+                                <span>Save</span>
+                              </button>
+                            </div>
                           </div>
-                        )}
+
+                          {/* Feedback */}
+                          <div className="mt-3">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Feedback
+                            </label>
+                            <textarea
+                              value={subFeedback[subQ.id] ?? subQ.adminFeedback ?? ''}
+                              onChange={(e) => handleSubFeedbackChange(subQ.id, e.target.value)}
+                              placeholder="Provide feedback for this sub-question..."
+                              rows={2}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            />
+                          </div>
+
+                          {/* Current Feedback Display */}
+                          {subQ.adminFeedback && (
+                            <div className="mt-3 p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
+                              <div className="flex items-start space-x-2">
+                                <MessageSquare className="w-3 h-3 text-green-600 mt-0.5" />
+                                <div>
+                                  <p className="text-xs font-medium text-green-900">Current Feedback:</p>
+                                  <p className="text-xs text-green-800">{subQ.adminFeedback}</p>
+                                  {subQ.adminRating && (
+                                    <p className="text-xs text-green-700 mt-1">
+                                      Current Rating: {subQ.adminRating}/{Math.floor(question.successMarks / (question.subQuestions?.length || 1))} marks
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))
+                    ))
                   ) : (
                     /* No sub-questions found */
                     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
@@ -328,7 +322,7 @@ export default function Arena() {
                         </p>
                       </div>
                       <p className="text-yellow-700 text-sm">
-                        Comprehension questions should have individual sub-questions for students to answer. 
+                        Comprehension questions should have individual sub-questions for students to answer.
                         Please check if this question was created properly.
                       </p>
                     </div>
@@ -396,14 +390,6 @@ export default function Arena() {
                       />
                     </div>
 
-                    {/* Save Button */}
-                    <button
-                      onClick={() => handleSaveRating(question.id)}
-                      className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                      <Save className="w-4 h-4" />
-                      <span>Save Rating</span>
-                    </button>
 
                     {/* Current Feedback Display */}
                     {question.adminFeedback && (
