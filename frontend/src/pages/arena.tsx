@@ -104,30 +104,30 @@ export default function Arena() {
   }, []);
 
   return (
-    <div className="min-h-screen lg:h-screen flex flex-col bg-gray-50 lg:overflow-hidden">
+    <div className="min-h-screen lg:h-screen flex flex-col bg-gray-50 lg:overflow-hidden w-full overflow-x-hidden">
       {/* Header */}
-      <div className="flex-shrink-0 h-16 md:h-20 bg-white shadow-sm border-b border-gray-200">
+      <div className="flex-shrink-0 h-16 md:h-20 bg-white shadow-sm border-b border-gray-200 w-full">
         <ArenaNav title={questionInfo.title}  />
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col lg:flex-row lg:min-h-0">
+      <div className="flex-1 flex flex-col lg:flex-row lg:min-h-0 w-full overflow-x-hidden">
         {/* Left Panel - Main Content */}
-        <div className="flex-1 flex flex-col min-w-0 order-1">
+        <div className="flex-1 flex flex-col min-w-0 order-1 w-full lg:w-auto overflow-x-hidden">
           <SecondaryNav />
-          <div className="flex-1 bg-white shadow-sm min-h-[50vh] lg:min-h-0">
+          <div className="flex-1 bg-white shadow-sm min-h-[50vh] lg:min-h-0 w-full overflow-x-hidden">
             <LeftPanel />
           </div>
         </div>
 
         {/* Right Panel - Timer Section */}
-        <div className="w-full lg:w-80 flex-shrink-0 bg-white shadow-lg border-t lg:border-t-0 lg:border-l border-gray-200 order-2 lg:order-1 min-h-[40vh] lg:min-h-0">
+        <div className="w-full lg:w-80 flex-shrink-0 bg-white shadow-lg border-t lg:border-t-0 lg:border-l border-gray-200 order-2 lg:order-1 min-h-[40vh] lg:min-h-0 overflow-x-hidden">
           <TimerSection />
         </div>
       </div>
 
       {/* Footer */}
-      <div className="flex-shrink-0 h-14 md:h-16 bg-white shadow-sm border-t border-gray-200">
+      <div className="flex-shrink-0 h-auto md:h-16 bg-white shadow-sm border-t border-gray-200 w-full overflow-x-hidden">
         <ArenaFooter id={questionId.id} />
       </div>
     </div>

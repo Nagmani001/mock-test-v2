@@ -69,8 +69,8 @@ function ArenaFooter({ id }: { id: string | undefined }) {
 
 
   return (
-    <div className="flex justify-between items-center px-6 py-4 bg-white shadow-sm">
-      <div className="flex items-center space-x-4">
+    <div className="flex flex-col sm:flex-row sm:justify-between items-center px-3 md:px-6 py-2 md:py-4 bg-white shadow-sm gap-3 sm:gap-0 overflow-x-hidden">
+      <div className="flex items-center space-x-2 md:space-x-4 w-full sm:w-auto justify-center sm:justify-start">
         <button
           onClick={() => {
             answer.map((x: any) => {
@@ -116,9 +116,10 @@ function ArenaFooter({ id }: { id: string | undefined }) {
               setCurrentQuestionId(nextQuestion.id);
             }
           }}
-          className="px-6 py-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 transform hover:scale-105"
+          className="px-2 md:px-4 lg:px-6 py-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 text-xs md:text-sm whitespace-nowrap"
         >
-          Mark for Review & Next
+          <span className="hidden md:inline">Mark for Review & Next</span>
+          <span className="md:hidden">Mark & Next</span>
         </button>
         <button
           onClick={() => {
@@ -131,12 +132,13 @@ function ArenaFooter({ id }: { id: string | undefined }) {
               return newArr;
             });
           }}
-          className="px-6 py-2 bg-gradient-to-r from-gray-400 to-gray-500 text-white font-semibold rounded-lg shadow-md hover:from-gray-500 hover:to-gray-600 transition-all duration-200 transform hover:scale-105"
+          className="px-2 md:px-4 lg:px-6 py-2 bg-gradient-to-r from-gray-400 to-gray-500 text-white font-semibold rounded-lg shadow-md hover:from-gray-500 hover:to-gray-600 transition-all duration-200 text-xs md:text-sm whitespace-nowrap"
         >
-          Clear Response
+          <span className="hidden md:inline">Clear Response</span>
+          <span className="md:hidden">Clear</span>
         </button>
       </div>
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 md:space-x-4 w-full sm:w-auto justify-center sm:justify-end">
         <button
           onClick={() => {
             answer.map((x: any) => {
@@ -184,7 +186,7 @@ function ArenaFooter({ id }: { id: string | undefined }) {
               }
             })
           }}
-          className="px-8 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105"
+          className="px-3 md:px-6 lg:px-8 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 transition-all duration-200 text-xs md:text-sm whitespace-nowrap"
         >
           Next
         </button>
@@ -230,10 +232,10 @@ function ArenaFooter({ id }: { id: string | undefined }) {
               console.log(err);
             }
           }}
-          className="px-8 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
+          className="px-3 md:px-6 lg:px-8 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 text-xs md:text-sm whitespace-nowrap"
         >
           {loading ?
-            <span className="loading loading-dots loading-md"></span>
+            <span className="loading loading-dots loading-sm md:loading-md"></span>
             : "Submit Test"}
 
         </button>
