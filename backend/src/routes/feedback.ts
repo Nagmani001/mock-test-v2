@@ -72,41 +72,36 @@ feedbackRouter.post("/grade", async (req: Request, res: Response) => {
     )
   }
 
+  // Get the test answer to find the test ID
+  const testAnswer = await prisma.testAnswer.findFirst({
+    where: { id: parsedData.data.id }
+  });
+
+  if (!testAnswer) {
+    res.json({ msg: "Test answer not found" });
+    return;
+  }
+
+  // Get all questions for this test to calculate total marks correctly
+  const allQuestions = await prisma.question.findMany({
+    where: { testId: testAnswer.testId }
+  });
+
+  // Calculate total marks from all questions
   let totalMarks = 0;
+  allQuestions.forEach(question => {
+    totalMarks += question.totalMarks;
+  });
 
-  Promise.all(
-    parsedData.data.rating.map(async (x: any) => {
-      console.log(x.key);
-      const solution = await prisma.solution.findFirst({
-        where: {
-          id: x.key
-        }
-      });
-      console.log("solution", solution);
-      const question = await prisma.question.findFirst({
-        where: {
-          id: solution?.questionId
-        }
-      });
-      console.log("question", question);
-      if (!question?.totalMarks) {
-        return;
-      }
-      totalMarks += question.totalMarks
-    })
-  )
-  //TODO: resolve this 
-  await new Promise(r => setTimeout(r, 2000));
-
+  // Calculate obtained marks from regular questions
   let obtainedMarks = 0;
-
-  parsedData.data.rating.forEach(x => {
+  parsedData.data.rating.forEach((x: any) => {
     obtainedMarks += x.value;
   });
 
-  // Add sub-question ratings to obtained marks
+  // Add sub-question ratings to obtained marks (for comprehension questions)
   if (parsedData.data.subRating) {
-    parsedData.data.subRating.forEach(x => {
+    parsedData.data.subRating.forEach((x: any) => {
       obtainedMarks += x.value;
     });
   }
